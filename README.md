@@ -1,12 +1,6 @@
-# AA Hotels Website Demo Pack
+# AA Hotels Website Demo
 
-A polished static website demo pack for **AA Hotels**, created to present multiple premium website directions to a hotel client.
-
-## Demo Concepts
-
-- `index.html` - Luxury City Hotel concept
-- `demo-2-resort.html` - Resort Collection concept
-- `demo-3-business.html` - Business Class Hotel concept
+A polished static website demo for **AA Hotels**, created to present a premium hotel booking and enquiry experience.
 
 ## Features
 
@@ -20,7 +14,7 @@ A polished static website demo pack for **AA Hotels**, created to present multip
 
 ## Preview
 
-Open `index.html` in a browser, or publish this repository with GitHub Pages. The main page links to all three demo concepts.
+Open `index.html` in a browser, or publish this repository with GitHub Pages.
 
 ## GitHub Pages
 
