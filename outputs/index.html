@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AA Hotels | Premium Stay Experience Demo</title>
+  <meta name="description" content="A premium hotel website demo for AA Hotels with rooms, dining, events, and booking inquiry features.">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <style>
+    :root {
+      --ink: #16201c;
+      --muted: #65706b;
+      --line: #dde3dd;
+      --paper: #fbfaf6;
+      --white: #ffffff;
+      --forest: #12392f;
+      --green: #2f6b57;
+      --gold: #c59a42;
+      --rose: #b95d4b;
+      --sky: #dfeeed;
+      --shadow: 0 18px 60px rgba(18, 57, 47, 0.16);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input, select, textarea { font: inherit; }
+
+    .shell {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(18, 32, 28, 0.62);
+      backdrop-filter: blur(16px);
+      color: var(--white);
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0;
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .navlinks a:hover { color: var(--white); }
+
+    .icon-btn,
+    .primary-btn,
+    .secondary-btn {
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .primary-btn {
+      color: #16201c;
+      background: var(--gold);
+      box-shadow: 0 14px 36px rgba(197, 154, 66, 0.32);
+    }
+
+    .secondary-btn {
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .primary-btn:hover,
+    .secondary-btn:hover,
+    .icon-btn:hover { transform: translateY(-2px); }
+
+    .icon-btn {
+      width: 44px;
+      padding: 0;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(255, 255, 255, 0.08);
+      display: none;
+    }
+
+    .hero {
+      min-height: 94vh;
+      color: var(--white);
+      display: grid;
+      align-items: end;
+      padding: 150px 0 42px;
+      background:
+        linear-gradient(90deg, rgba(10, 27, 23, 0.82), rgba(10, 27, 23, 0.34) 52%, rgba(10, 27, 23, 0.1)),
+        linear-gradient(0deg, rgba(10, 27, 23, 0.68), rgba(10, 27, 23, 0.04) 38%),
+        url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2400&q=85") center / cover;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) 420px;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: #f1cf80;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Playfair Display", Georgia, serif;
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 790px;
+      font-size: clamp(54px, 7vw, 104px);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 24px 0 30px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .booking-panel {
+      background: rgba(251, 250, 246, 0.96);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .booking-panel h2 {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 19px;
+      margin-bottom: 16px;
+    }
+
+    .booking-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 13px 12px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(197, 154, 66, 0.18);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .stat {
+      padding: 26px 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:last-child { border-right: 0; }
+    .stat strong {
+      display: block;
+      color: var(--forest);
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    section { padding: 84px 0; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 34px;
+    }
+
+    .section-head h2 {
+      max-width: 650px;
+      font-size: clamp(34px, 4vw, 58px);
+    }
+
+    .section-head p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .experience {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .feature-photo {
+      min-height: 560px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=84") center / cover;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature-row {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+    }
+
+    .feature-row i {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: var(--forest);
+      background: var(--sky);
+      border-radius: var(--radius);
+    }
+
+    .feature-row h3 {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .feature-row p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .rooms {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .rooms .section-head p { color: rgba(255, 255, 255, 0.7); }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .room-card {
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .room-card img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+    }
+
+    .room-body { padding: 22px; }
+    .room-body h3 {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .room-body p {
+      margin: 0 0 18px;
+      color: rgba(255, 255, 255, 0.72);
+    }
+    .room-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .room-meta span {
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .room-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #f1cf80;
+      font-weight: 800;
+    }
+
+    .tabbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--muted);
+      border-radius: var(--radius);
+      padding: 11px 15px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--white);
+      background: var(--forest);
+      border-color: var(--forest);
+    }
+
+    .amenity-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: var(--radius);
+    }
+
+    .amenity-panel img {
+      width: 100%;
+      height: 410px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+
+    .amenity-content h3 {
+      font-size: clamp(30px, 3vw, 46px);
+      margin-bottom: 16px;
+    }
+
+    .amenity-content p {
+      color: var(--muted);
+      margin: 0 0 22px;
+      font-size: 17px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .check-list i {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      color: var(--white);
+      background: var(--green);
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .gallery-band {
+      padding: 0 0 84px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 1fr;
+      gap: 14px;
+    }
+
+    .gallery-band img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+    }
+
+    .gallery-band img:first-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .gallery-band img:last-child { border-radius: var(--radius) 0 0 var(--radius); }
+
+    .events {
+      background: #edf4ef;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .event-card {
+      border: 1px solid #d5ded7;
+      border-radius: var(--radius);
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .event-card img {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .event-card div { padding: 20px; }
+    .event-card h3 {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .event-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .reviews {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .score {
+      position: sticky;
+      top: 100px;
+      padding: 28px;
+      color: var(--white);
+      background: var(--forest);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .score strong {
+      display: block;
+      font-size: 74px;
+      line-height: 1;
+      color: #f1cf80;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .review {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+    }
+
+    .review p {
+      margin: 0 0 14px;
+      color: var(--ink);
+      font-size: 17px;
+    }
+
+    .review span {
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .contact {
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(18, 57, 47, 0.94), rgba(18, 57, 47, 0.72)),
+        url("https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1800&q=84") center / cover;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      margin-bottom: 18px;
+    }
+
+    .contact p {
+      color: rgba(255, 255, 255, 0.74);
+      margin: 0 0 22px;
+      max-width: 510px;
+    }
+
+    .contact-form {
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    footer {
+      background: #0d211c;
+      color: rgba(255, 255, 255, 0.74);
+      padding: 28px 0;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 20;
+      max-width: 340px;
+      padding: 16px 18px;
+      color: var(--white);
+      background: var(--forest);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transform: translateY(24px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 930px) {
+      .navlinks {
+        position: fixed;
+        top: 74px;
+        left: 18px;
+        right: 18px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px;
+        background: rgba(18, 32, 28, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: var(--radius);
+      }
+      .navlinks a { padding: 13px 10px; }
+      .navlinks.is-open { display: flex; }
+      .icon-btn { display: inline-flex; }
+      .topbar .primary-btn { display: none; }
+      .hero { min-height: auto; padding-top: 128px; }
+      .hero-grid,
+      .experience,
+      .amenity-panel,
+      .reviews,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-panel { max-width: 580px; }
+      .stats,
+      .room-grid,
+      .event-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .feature-photo { min-height: 380px; }
+      .gallery-band { grid-template-columns: 1fr; padding-inline: 18px; }
+      .gallery-band img,
+      .amenity-panel img { height: 320px; border-radius: var(--radius); }
+      .score { position: static; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .nav { min-height: 66px; }
+      .navlinks { top: 66px; left: 14px; right: 14px; }
+      .hero { padding: 112px 0 26px; }
+      h1 { font-size: 48px; }
+      .hero-copy { font-size: 16px; }
+      section { padding: 58px 0; }
+      .section-head { display: grid; gap: 14px; }
+      .stats,
+      .room-grid,
+      .event-grid,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .stat:last-child { border-bottom: 0; }
+      .booking-panel,
+      .contact-form,
+      .amenity-panel { padding: 18px; }
+      .feature-row { grid-template-columns: 1fr; }
+      .room-card img { height: 235px; }
+      .toast { left: 14px; right: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#home" aria-label="AA Hotels home">
+        <span class="mark">AA</span>
+        <span>AA Hotels</span>
+      </a>
+      <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+        <a href="#experience">Experience</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="primary-btn" href="#contact"><i data-lucide="calendar-check"></i> Enquire Now</a>
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" type="button"><i data-lucide="menu"></i></button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">Luxury hospitality in the heart of the city</p>
+          <h1>AA Hotels</h1>
+          <p class="hero-copy">A refined hotel website demo built to sell comfort, confidence, and direct bookings from the first screen.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#rooms"><i data-lucide="bed-double"></i> Explore Rooms</a>
+            <a class="secondary-btn" href="#amenities"><i data-lucide="sparkles"></i> View Amenities</a>
+          </div>
+        </div>
+
+        <aside class="booking-panel" aria-label="Booking inquiry">
+          <h2>Check Availability</h2>
+          <form class="booking-grid" id="quickBooking">
+            <label>Arrival
+              <input type="date" required>
+            </label>
+            <label>Departure
+              <input type="date" required>
+            </label>
+            <div class="form-row">
+              <label>Guests
+                <select required>
+                  <option>2 Guests</option>
+                  <option>1 Guest</option>
+                  <option>3 Guests</option>
+                  <option>4 Guests</option>
+                </select>
+              </label>
+              <label>Room
+                <select required>
+                  <option>Executive Suite</option>
+                  <option>Deluxe Room</option>
+                  <option>Family Residence</option>
+                </select>
+              </label>
+            </div>
+            <button class="primary-btn" type="submit"><i data-lucide="search"></i> Search Stay</button>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <div class="stats" aria-label="Hotel highlights">
+      <div class="stat"><strong>42</strong><span>Premium rooms and suites</span></div>
+      <div class="stat"><strong>24/7</strong><span>Concierge and front desk</span></div>
+      <div class="stat"><strong>4.8</strong><span>Guest satisfaction score</span></div>
+      <div class="stat"><strong>3</strong><span>Dining and event venues</span></div>
+    </div>
+
+    <section id="experience">
+      <div class="shell">
+        <div class="section-head">
+          <h2>A stay designed around calm, service, and arrival.</h2>
+          <p>Position AA Hotels as a premium choice for business travelers, families, events, and weekend guests.</p>
+        </div>
+        <div class="experience">
+          <div class="feature-photo" role="img" aria-label="Luxury hotel lobby"></div>
+          <div class="feature-stack">
+            <article class="feature-row">
+              <i data-lucide="bell-ring"></i>
+              <div>
+                <h3>White-glove welcome</h3>
+                <p>Fast check-in, warm lobby service, luggage support, and thoughtful arrival rituals for every guest.</p>
+              </div>
+            </article>
+            <article class="feature-row">
+              <i data-lucide="map-pin"></i>
+              <div>
+                <h3>Prime city access</h3>
+                <p>Clear location messaging for corporate hubs, shopping districts, transport links, and local attractions.</p>
+              </div>
+            </article>
+            <article class="feature-row">
+              <i data-lucide="utensils"></i>
+              <div>
+                <h3>Dining that becomes a reason to stay</h3>
+                <p>Promote breakfast, signature menus, private dining, and event catering with strong conversion copy.</p>
+              </div>
+            </article>
+            <article class="feature-row">
+              <i data-lucide="shield-check"></i>
+              <div>
+                <h3>Trust-led booking journey</h3>
+                <p>Guest reviews, transparent room benefits, and direct enquiry CTAs reduce hesitation before contact.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rooms" id="rooms">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Rooms guests can choose with confidence.</h2>
+          <p>Each room card is built for scanning: beautiful photo, clear benefits, compact amenities, and pricing signal.</p>
+        </div>
+        <div class="room-grid">
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1000&q=84" alt="Deluxe room with warm lighting">
+            <div class="room-body">
+              <h3>Deluxe Room</h3>
+              <p>Ideal for short business stays with smart workspace, plush bedding, and a quiet city-facing layout.</p>
+              <div class="room-meta"><span>King bed</span><span>Work desk</span><span>Breakfast</span></div>
+              <div class="room-price"><span>From INR 4,999</span><i data-lucide="arrow-right"></i></div>
+            </div>
+          </article>
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=84" alt="Executive suite bedroom">
+            <div class="room-body">
+              <h3>Executive Suite</h3>
+              <p>A spacious suite for premium guests, featuring lounge seating, elevated bath amenities, and city views.</p>
+              <div class="room-meta"><span>Suite lounge</span><span>City view</span><span>Mini bar</span></div>
+              <div class="room-price"><span>From INR 7,499</span><i data-lucide="arrow-right"></i></div>
+            </div>
+          </article>
+          <article class="room-card">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=84" alt="Family residence hotel room">
+            <div class="room-body">
+              <h3>Family Residence</h3>
+              <p>Comfortable connected spaces for families, long-stay guests, and celebration weekends.</p>
+              <div class="room-meta"><span>4 guests</span><span>Living area</span><span>Connected rooms</span></div>
+              <div class="room-price"><span>From INR 9,999</span><i data-lucide="arrow-right"></i></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="amenities">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Premium amenities, presented like a sales asset.</h2>
+          <p>Interactive tabs help the client see how the website can highlight different revenue-driving services.</p>
+        </div>
+        <div class="tabbar" role="tablist" aria-label="Amenities">
+          <button class="tab" type="button" role="tab" aria-selected="true" data-tab="wellness">Wellness</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="dining">Dining</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-tab="business">Business</button>
+        </div>
+        <article class="amenity-panel" id="amenityPanel">
+          <img id="amenityImage" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1100&q=84" alt="Spa and wellness room">
+          <div class="amenity-content">
+            <h3 id="amenityTitle">Wellness Lounge</h3>
+            <p id="amenityText">A calm wellness story gives AA Hotels a premium edge with spa therapy, fitness access, and recovery-focused stays.</p>
+            <ul class="check-list" id="amenityList">
+              <li><i data-lucide="check"></i> Spa therapy rooms</li>
+              <li><i data-lucide="check"></i> Fitness studio access</li>
+              <li><i data-lucide="check"></i> Steam and relaxation area</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="gallery-band" aria-label="Hotel gallery">
+      <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1100&q=84" alt="Hotel exterior at night">
+      <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=900&q=84" alt="Hotel restaurant table">
+      <img src="https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1100&q=84" alt="Hotel pool and lounge">
+    </div>
+
+    <section class="events" id="events">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Built to win banquets, meetings, and celebrations.</h2>
+          <p>The demo shows that the hotel website can sell more than rooms: events, catering, and corporate bookings matter.</p>
+        </div>
+        <div class="event-grid">
+          <article class="event-card">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=84" alt="Wedding banquet setup">
+            <div>
+              <h3>Weddings</h3>
+              <p>Elegant spaces, menu planning, decor coordination, and guest accommodation packages.</p>
+            </div>
+          </article>
+          <article class="event-card">
+            <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=84" alt="Corporate conference hall">
+            <div>
+              <h3>Conferences</h3>
+              <p>Boardrooms, projectors, high-speed Wi-Fi, coffee breaks, and team lunch packages.</p>
+            </div>
+          </article>
+          <article class="event-card">
+            <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?auto=format&fit=crop&w=1000&q=84" alt="Private dining setup">
+            <div>
+              <h3>Private Dining</h3>
+              <p>Chef-led menus for birthdays, anniversaries, client dinners, and intimate family occasions.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews">
+      <div class="shell reviews">
+        <aside class="score">
+          <p class="eyebrow">Guest proof</p>
+          <strong>4.8</strong>
+          <p>Review-led trust section for conversion. Replace these with real Google or OTA reviews when the client approves.</p>
+        </aside>
+        <div class="review-list">
+          <article class="review">
+            <p>"The lobby, room, breakfast, and staff experience all felt premium. Booking directly was simple and clear."</p>
+            <span>Business guest</span>
+          </article>
+          <article class="review">
+            <p>"Our family weekend was comfortable from check-in to checkout. The connected room option made the stay easy."</p>
+            <span>Family stay</span>
+          </article>
+          <article class="review">
+            <p>"The banquet team handled our corporate event beautifully. The website made the venue feel trustworthy before we visited."</p>
+            <span>Event client</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="shell contact-grid">
+        <div>
+          <p class="eyebrow">Direct booking focus</p>
+          <h2>Turn visitors into confirmed enquiries.</h2>
+          <p>This contact section is designed as a lead generator for reservations, events, and group bookings. It can connect to WhatsApp, email, CRM, or a real booking engine.</p>
+          <div class="hero-actions">
+            <a class="secondary-btn" href="tel:+910000000000"><i data-lucide="phone"></i> Call Hotel</a>
+            <a class="secondary-btn" href="https://wa.me/910000000000" target="_blank" rel="noreferrer"><i data-lucide="message-circle"></i> WhatsApp</a>
+          </div>
+        </div>
+        <form class="contact-form booking-grid" id="contactForm">
+          <div class="form-row">
+            <label>Name
+              <input type="text" placeholder="Guest name" required>
+            </label>
+            <label>Phone
+              <input type="tel" placeholder="+91 00000 00000" required>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Interest
+              <select required>
+                <option>Room booking</option>
+                <option>Wedding or banquet</option>
+                <option>Corporate meeting</option>
+                <option>Restaurant reservation</option>
+              </select>
+            </label>
+            <label>Date
+              <input type="date" required>
+            </label>
+          </div>
+          <label>Message
+            <textarea placeholder="Tell us what you need"></textarea>
+          </label>
+          <button class="primary-btn" type="submit"><i data-lucide="send"></i> Send Enquiry</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <a class="brand" href="#home"><span class="mark">AA</span><span>AA Hotels</span></a>
+      <span>Premium website demo prepared for client presentation.</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Demo form submitted. In the real build, this can send email, WhatsApp, or CRM leads.</div>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const amenityImage = document.getElementById("amenityImage");
+    const amenityTitle = document.getElementById("amenityTitle");
+    const amenityText = document.getElementById("amenityText");
+    const amenityList = document.getElementById("amenityList");
+    const toast = document.getElementById("toast");
+    const navlinks = document.getElementById("navlinks");
+    const menuBtn = document.getElementById("menuBtn");
+
+    const amenities = {
+      wellness: {
+        title: "Wellness Lounge",
+        text: "A calm wellness story gives AA Hotels a premium edge with spa therapy, fitness access, and recovery-focused stays.",
+        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1100&q=84",
+        alt: "Spa and wellness room",
+        items: ["Spa therapy rooms", "Fitness studio access", "Steam and relaxation area"]
+      },
+      dining: {
+        title: "Signature Dining",
+        text: "Dining pages can drive breakfast upgrades, restaurant reservations, private dining requests, and celebration packages.",
+        image: "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?auto=format&fit=crop&w=1100&q=84",
+        alt: "Fine dining restaurant",
+        items: ["All-day restaurant", "Chef tasting menus", "Private family dining"]
+      },
+      business: {
+        title: "Business Ready",
+        text: "Corporate travelers need speed, clarity, quiet workspaces, and meeting services. This tab makes that value visible.",
+        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1100&q=84",
+        alt: "Business meeting room",
+        items: ["Boardrooms and AV", "High-speed Wi-Fi", "Airport transfer support"]
+      }
+    };
+
+    function renderIcons() {
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.setTimeout(() => toast.classList.remove("is-visible"), 3200);
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const selected = amenities[tab.dataset.tab];
+        tabs.forEach((item) => item.setAttribute("aria-selected", "false"));
+        tab.setAttribute("aria-selected", "true");
+        amenityImage.src = selected.image;
+        amenityImage.alt = selected.alt;
+        amenityTitle.textContent = selected.title;
+        amenityText.textContent = selected.text;
+        amenityList.innerHTML = selected.items
+          .map((item) => `<li><i data-lucide="check"></i> ${item}</li>`)
+          .join("");
+        renderIcons();
+      });
+    });
+
+    menuBtn.addEventListener("click", () => {
+      navlinks.classList.toggle("is-open");
+    });
+
+    navlinks.addEventListener("click", (event) => {
+      if (event.target.tagName === "A") navlinks.classList.remove("is-open");
+    });
+
+    document.querySelectorAll("form").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        showToast("Demo enquiry captured. This can connect to WhatsApp, email, or a booking engine.");
+        form.reset();
+      });
+    });
+
+    window.addEventListener("load", renderIcons);
+  </script>
+</body>
+</html>
